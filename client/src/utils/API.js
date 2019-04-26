@@ -15,7 +15,7 @@ export default {
   saveBook: function(bookData) {
     return axios.post("/api/books", bookData);
   },
-  searchBooks: function(query) {
-    return axios.get(`https://www.googleapis.com/books/v1/volumes?q=${query}&key=${API_Key}`);
+  searchBooks: function(keywords) {
+    return axios.get(`https://www.googleapis.com/books/v1/volumes?q=${keywords}&key=${API_Key}`);
   }   
 };
