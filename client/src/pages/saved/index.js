@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-import DeleteBtn from "../../components/DeleteBtn";
 import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../../components/Grid";
 import { List, ListItem } from "../../components/List";
 import { Input, TextArea, FormBtn } from "../../components/Form";
 import Jumbotron from "../../components/Jumbotron";
 import API from "../../utils/API";
-import Books from "../../components/Books";
+import { Card, CardBody, CardHeader } from "../../components/Books";
+import { DeleteBtn } from "../../components/DeleteBtn"
+
 
 class Saved extends Component {
     state = {
@@ -17,23 +18,22 @@ class Saved extends Component {
         API.getBooks()
             .then(res => {
                 console.log(res.data);
-                this.setState({books: res.data})
+                this.setState({ books: res.data });
             })
             .catch(err => console.log(err))
     };
 
-    // constructor(props) {
-    //     super(props);
-    //     API.getBooks()
-    //         .then(res => {
-    //             this.state = { books: res.data };
-    //             console.log("hi ------ ");
-    //             console.log(this.state.books);
-    //         })
-    //         .catch(err => console.log(err));
-    // }
+    handleDeleteEvent = (id) => {
+        API.deleteBook(id)
+            .then(res => {
+                let found = this.state.books.filter(x => x._id != id);
+                console.log(found);
+                this.setState({ books: found });
+            })
+            .catch(err => console.log(err))
 
-    
+
+    };
 
     render() {
         return (
@@ -52,17 +52,18 @@ class Saved extends Component {
                         <hr></hr>
                         {this.state.books.length ? (
                             this.state.books.map(book => (
-                                
+                                <Card key={book._id} id={book._id}>
+                                    <CardHeader title={book.title} />
+                                    <CardBody
+                                        authors={book.authors.toString()}
+                                        description={book.description}
+                                    >
+                                        <DeleteBtn onClick={() => this.handleDeleteEvent(book._id)} />
+                                    </CardBody>
+                                </Card>
 
-                                <Books key={book._id}
-                                    id={book._id}
-                                    title={book.title}
-                                    authors={book.authors.toString()}
-                                    description={book.description}
-                                    image={book.image}
-                                    link={book.link}
-                                    page="saved"
-                                />
+
+
                             ))
                         ) : (
                                 <h3>No Results to Display</h3>

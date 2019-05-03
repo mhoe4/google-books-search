@@ -5,7 +5,8 @@ import { Col, Row, Container } from "../../components/Grid";
 import { List, ListItem } from "../../components/List";
 import { Input, TextArea, FormBtn } from "../../components/Form";
 import Jumbotron from "../../components/Jumbotron";
-import Books from "../../components/Books";
+import { Card, CardBody, CardHeader } from "../../components/Books";
+import { SaveBtn } from "../../components/SaveBtn"
 
 class Search extends Component {
   state = {
@@ -28,7 +29,25 @@ class Search extends Component {
         .catch(err => console.log(err));
     }
   };
+
+  handleSaveEvent = (book) => {
+    let newbook = {
+
+      title: book.volumeInfo.title,
+      authors: book.volumeInfo.authors,
+      description: book.volumeInfo.description,
+      image: book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : "http://scottishbooktrust.com/files/styles/blog_detail/public/cover-not-available_206.png?itok=ImPHJNAF",
+      link: book.volumeInfo.infoLink
+    }
+    API.saveBook(newbook)
+      .then(res => alert(`Saved Book Titled: ${res.data.title}!`))
+      .catch(err => console.log(err))
+    // console.log(book);
+  };
+
   render() {
+    let title = "";
+
     return (
       <Container fluid>
         <Row>
@@ -65,16 +84,15 @@ class Search extends Component {
             <hr></hr>
             {this.state.books.length ? (
               this.state.books.map(book => (
-                console.log(book.volumeInfo.authors.toString()),
-                
-                <Books key={book.id}
-                  title={book.volumeInfo.title}
-                  authors={book.volumeInfo.authors.toString()}
-                  description={book.volumeInfo.description}
-                  image={book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : "http://scottishbooktrust.com/files/styles/blog_detail/public/cover-not-available_206.png?itok=ImPHJNAF"}
-                  link={book.volumeInfo.infoLink}
-                  page="search"
-                />
+                <Card key={book.id} id={book.id}>
+                  <CardHeader title={book.volumeInfo.title} />
+                  <CardBody
+                    authors={book.volumeInfo.authors.toString()}
+                    description={book.volumeInfo.description}
+                  >
+                    <SaveBtn onClick={() => this.handleSaveEvent(book)} />
+                  </CardBody>
+                </Card>
               ))
             ) : (
                 <h3>No Results to Display</h3>
