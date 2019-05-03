@@ -4,22 +4,13 @@ import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../../components/Grid";
 import { List, ListItem } from "../../components/List";
 import { Input, TextArea, FormBtn } from "../../components/Form";
-import DeleteBtn from "../../components/DeleteBtn";
 import Jumbotron from "../../components/Jumbotron";
-import { Card, CardBody, CardHeader } from "../../components/Card";
+import Books from "../../components/Books";
 
 class Search extends Component {
   state = {
     keywords: "",
     books: []
-  };
-
-  handleSaveBook = event => {
-    console.log(event);
-  };
-
-  handleViewBook = event => {
-    console.log(event);
   };
 
   handleInputChange = event => {
@@ -63,7 +54,7 @@ class Search extends Component {
                 disabled={!(this.state.keywords)}
                 onClick={this.handleFormSubmit}
               >
-                Submit Book
+                Search Google Books
               </FormBtn>
             </form>
           </Col>
@@ -74,20 +65,19 @@ class Search extends Component {
             <hr></hr>
             {this.state.books.length ? (
               this.state.books.map(book => (
-                <Card key={book.id}>
-                  <CardHeader title={book.volumeInfo.title} />
-                  <CardBody 
-                    authors={book.volumeInfo.authors} 
-                    description={book.volumeInfo.description} 
-                    onView={this.handleViewBook}
-                    onSave={this.handleSaveBook} 
-                  />
-                  
-                </Card>
+                console.log(book.volumeInfo.authors.toString()),
+                
+                <Books key={book.id}
+                  title={book.volumeInfo.title}
+                  authors={book.volumeInfo.authors.toString()}
+                  description={book.volumeInfo.description}
+                  image={book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : "http://scottishbooktrust.com/files/styles/blog_detail/public/cover-not-available_206.png?itok=ImPHJNAF"}
+                  link={book.volumeInfo.infoLink}
+                />
               ))
             ) : (
-              <h3>No Results to Display</h3>
-            )}
+                <h3>No Results to Display</h3>
+              )}
           </Col>
         </Row>
       </Container>
