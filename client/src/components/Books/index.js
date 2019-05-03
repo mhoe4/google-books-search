@@ -6,6 +6,7 @@ import { DeleteBtn } from "../../components/DeleteBtn"
 class Books extends Component {
 
   state = {
+    id: "",
     title: "",
     authors: [],
     description: "",
@@ -16,6 +17,7 @@ class Books extends Component {
 
   componentDidMount() {
     this.setState({
+      id: this.props.id,
       title: this.props.title,
       authors: this.props.authors.split(','),
       description: this.props.description,
@@ -34,8 +36,12 @@ class Books extends Component {
     
   };
 
-  handleDeleteEvent = () => {
+  handleDeleteEvent = (id) => {
+    API.deleteBook(id)
+    .then(res => alert(`Deleted Book Titled: ${res.data.title}!`))
+    .catch(err => console.log(err))
 
+    
   };
 
   render() {
@@ -51,7 +57,7 @@ class Books extends Component {
               <SaveBtn onClick={this.handleSaveEvent} />
             )
              : (
-              <DeleteBtn onClick={this.handleDeleteEvent} />
+              <DeleteBtn onClick={() => this.handleDeleteEvent(this.state.id)} />
               )}
             
           </h5>

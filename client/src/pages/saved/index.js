@@ -52,9 +52,10 @@ class Saved extends Component {
                         <hr></hr>
                         {this.state.books.length ? (
                             this.state.books.map(book => (
-                                console.log(book.authors.toString()),
+                                
 
                                 <Books key={book._id}
+                                    id={book._id}
                                     title={book.title}
                                     authors={book.authors.toString()}
                                     description={book.description}
