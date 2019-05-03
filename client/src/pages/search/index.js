@@ -73,6 +73,7 @@ class Search extends Component {
                   description={book.volumeInfo.description}
                   image={book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : "http://scottishbooktrust.com/files/styles/blog_detail/public/cover-not-available_206.png?itok=ImPHJNAF"}
                   link={book.volumeInfo.infoLink}
+                  page="search"
                 />
               ))
             ) : (

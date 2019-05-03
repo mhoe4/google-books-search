@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import API from "../../utils/API";
-import './style.css';
+import { SaveBtn } from "../../components/SaveBtn"
+import { DeleteBtn } from "../../components/DeleteBtn"
 
 class Books extends Component {
 
@@ -9,7 +10,8 @@ class Books extends Component {
     authors: [],
     description: "",
     image: "",
-    link: ""
+    link: "",
+    page: ""
   };
 
   componentDidMount() {
@@ -18,7 +20,8 @@ class Books extends Component {
       authors: this.props.authors.split(','),
       description: this.props.description,
       image: this.props.image,
-      link: this.props.link
+      link: this.props.link,
+      page: this.props.page
     });
   }
 
@@ -31,8 +34,8 @@ class Books extends Component {
     
   };
 
-  handleViewEvent = () => {
-    console.log("event");
+  handleDeleteEvent = () => {
+
   };
 
   render() {
@@ -44,8 +47,13 @@ class Books extends Component {
         <div className="card-body">
           <h5 className="card-title">
             Author(s): {this.state.authors}
-            <button onClick={this.handleSaveEvent} className="btn btn-primary m-button">Save</button>
-            <button onClick={this.handleViewEvent} className="btn btn-secondary m-button">View</button>
+            {this.state.page === "search" ? (
+              <SaveBtn onClick={this.handleSaveEvent} />
+            )
+             : (
+              <DeleteBtn onClick={this.handleDeleteEvent} />
+              )}
+            
           </h5>
           <p className="card-text">Description: {this.state.description}</p>
         </div>
