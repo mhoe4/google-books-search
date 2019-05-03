@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
 import { Col, Row, Container } from "../../components/Grid";
-import { List, ListItem } from "../../components/List";
-import { Input, TextArea, FormBtn } from "../../components/Form";
 import Jumbotron from "../../components/Jumbotron";
 import API from "../../utils/API";
 import { Card, CardBody, CardHeader } from "../../components/Books";
@@ -17,7 +14,7 @@ class Saved extends Component {
     componentDidMount = () => {
         API.getBooks()
             .then(res => {
-                console.log(res.data);
+                // console.log(res.data);
                 this.setState({ books: res.data });
             })
             .catch(err => console.log(err))
@@ -27,7 +24,7 @@ class Saved extends Component {
         API.deleteBook(id)
             .then(res => {
                 let found = this.state.books.filter(x => x._id != id);
-                console.log(found);
+                // console.log(found);
                 this.setState({ books: found });
             })
             .catch(err => console.log(err))
