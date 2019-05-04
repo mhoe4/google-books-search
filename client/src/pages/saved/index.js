@@ -23,7 +23,7 @@ class Saved extends Component {
     handleDeleteEvent = (id) => {
         API.deleteBook(id)
             .then(res => {
-                let found = this.state.books.filter(x => x._id != id);
+                let found = this.state.books.filter(x => x._id !== id);
                 // console.log(found);
                 this.setState({ books: found });
             })

@@ -17,6 +17,6 @@ export default {
     return axios.post("/api/books", book);
   },
   searchBooks: function (keywords) {
-    return axios.get(`https://www.googleapis.com/books/v1/volumes?q=${keywords}&key=${API_Key}`);
+    return axios.get(encodeURI(`https://www.googleapis.com/books/v1/volumes?q=${keywords}&key=${API_Key}`));
   }
 };

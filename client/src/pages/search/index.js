@@ -19,10 +19,10 @@ class Search extends Component {
     });
   };
 
-  handleFormSubmit = event => {
+  handleSearchFormSubmit = event => {
     event.preventDefault();
     if (this.state.keywords) {
-      API.searchBooks({ keywords: this.state.keywords })
+      API.searchBooks(this.state.keywords)
         .then(res => this.setState({ books: res.data.items }))
         .catch(err => console.log(err));
     }
@@ -39,7 +39,7 @@ class Search extends Component {
     }
     API.saveBook(newbook)
       .then(res => {
-        let found = this.state.books.filter(x => x.id != book.id);
+        let found = this.state.books.filter(x => x.id !== book.id);
         // console.log(found);
         this.setState({ books: found });
       })
@@ -70,7 +70,7 @@ class Search extends Component {
               />
               <FormBtn
                 disabled={!(this.state.keywords)}
-                onClick={this.handleFormSubmit}
+                onClick={this.handleSearchFormSubmit}
               >
                 Search Google Books
               </FormBtn>
